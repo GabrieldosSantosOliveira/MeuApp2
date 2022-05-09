@@ -14,7 +14,7 @@ export default function App() {
     one: "",
     dois: "",
     tres: "",
-    quatro: "",
+    quatro: "X",
     result: "",
   });
   function handleInputChange(e: any) {
@@ -30,42 +30,54 @@ export default function App() {
 
     console.log(valor);
     if (valor > 1) {
+      console.log(valor);
       let mult = dois * tres;
       mult /= valor;
+      setInput({ ...input, result: mult.toString() });
+    } else if (valor == 1) {
+      let mult = dois * tres;
+      setInput({ ...input, result: mult.toString() });
+    } else {
+      let calcula = parseFloat(input.one);
+      let mult = dois * tres;
+      mult /= calcula;
+      console.log(calcula);
       setInput({ ...input, result: mult.toString() });
     }
   }
   return (
     <View style={styles.container}>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="titulo">Digite o primeiro numero</label>
-        <input
-          id="one"
-          type="text"
-          value={input.one}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="titulo">Digite o primeiro numero</label>
-        <input
-          id="dois"
-          type="text"
-          value={input.dois}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="titulo">Digite o primeiro numero</label>
-        <input
-          id="tres"
-          type="text"
-          value={input.tres}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="titulo">Digite o primeiro numero</label>
-        <input
-          id="quatro"
-          type="text"
-          value={input.quatro}
-          onChange={handleInputChange}
-        />
+        <View style={styles.items}>
+          <input
+            style={styles.input}
+            id="one"
+            type="text"
+            value={input.one}
+            onChange={handleInputChange}
+          />
+          <input
+            id="dois"
+            type="text"
+            value={input.dois}
+            onChange={handleInputChange}
+          />
+        </View>
+        <View style={styles.items}>
+          <input
+            id="tres"
+            type="text"
+            value={input.tres}
+            onChange={handleInputChange}
+          />
+          <input
+            id="quatro"
+            readOnly
+            type="text"
+            value={input.quatro}
+            onChange={handleInputChange}
+          />
+        </View>
         <input
           id="result"
           readOnly
@@ -82,9 +94,15 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "collum",
+    margin: "auto",
+  },
+  items: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
 });
