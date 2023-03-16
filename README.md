@@ -1,8 +1,9 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/86084272/219434525-d515c049-d511-480d-9208-f02966303711.png"/> </p>
+<img width="200px" src="https://user-images.githubusercontent.com/86084272/225766340-213f40ba-7c47-4725-b387-ae71ccf8cdb8.png"/> </p>
   
  ## <p align="center"> Rule Of Three <a href="LICENSE"> <img  src="https://img.shields.io/static/v1?label=License&message=MIT&color=&labelColor=202024" alt="License"></a> </p>
-O Rule Of Three facilita o calculo de regras de tres 
+O Rule Of Three facilita o calculo de regras de três 
+
 ## 🔖 Demonstração
 https://user-images.githubusercontent.com/86084272/225765822-a4376364-8822-458e-a1bc-44ee1138e8a4.mp4
 
