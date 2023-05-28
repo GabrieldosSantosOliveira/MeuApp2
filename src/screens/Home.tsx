@@ -1,123 +1,112 @@
 import { FC, useState } from 'react';
-import { Alert, Modal, Text, View } from 'react-native';
+import { Alert, Text, View, StyleSheet } from 'react-native';
 
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
-import { Result } from '../components/Result';
+import { ModalRuleOfThreeShowResult } from '../components/ModalRuleOfThreeShowResult';
 import { Theme } from '../styles/Theme';
-
+import { LineEmpty } from '../components/LineEmpty';
+import { ServiceRuleOfThree } from '../services/ServiceRuleOfThree';
+const { colors, fontSize, fonts } = Theme;
 export const Home: FC = () => {
-  const { colors, fontSize, fonts } = Theme;
   const [numberOne, setNumberOne] = useState<string>('');
   const [numberTwo, setNumberTwo] = useState<string>('');
   const [numberThree, setNumberThree] = useState<string>('');
+  const [resultRuleOfThree, setResultRuleOfThree] = useState<number>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const LineEmpty = () => (
-    <View
-      style={{
-        height: 2,
-        width: 40,
-        backgroundColor: colors.black,
-      }}
-    />
-  );
-  const handleCalculate = () => {
-    if (isNaN(Number(numberOne))) {
-      return Alert.alert('Informe um número valido no primeiro campo');
+  const serviceRuleOfThree = new ServiceRuleOfThree();
+  const handleCalculateRuleOfThree = () => {
+    try {
+      const result = serviceRuleOfThree.calculate({
+        numberOne,
+        numberThree,
+        numberTwo,
+      });
+      setResultRuleOfThree(result);
+      setIsModalOpen(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
     }
-    if (isNaN(Number(numberTwo))) {
-      return Alert.alert('Informe um número valido  no segundo campo');
-    }
-    if (isNaN(Number(numberThree))) {
-      return Alert.alert('Informe um número valido  no terceiro campo');
-    }
-    if (isNaN((Number(numberTwo) * Number(numberThree)) / Number(numberOne))) {
-      return Alert.alert('Confira se todos  os campos contém números');
-    }
-    setIsModalOpen(true);
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingHorizontal: 10,
-        backgroundColor: colors.background,
-        paddingVertical: 20,
-      }}
-    >
-      <View style={{ flex: 1, paddingTop: 30, gap: 30 }}>
-        <Text
-          style={{
-            fontFamily: fonts.Lexend[700],
-            fontSize: fontSize[24],
-            textAlign: 'center',
-          }}
-        >
+    <View style={styles.container}>
+      <View style={styles.main}>
+        <Text role="heading" style={styles.heading}>
           Rule Of Three
         </Text>
 
-        <View
-          style={{
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: 10,
-          }}
-        >
+        <View style={styles.boxInput}>
           <Input
-            style={{ flex: 1, textAlign: 'center' }}
-            _focus={{ borderWidth: 2 }}
+            style={styles.input}
+            _focus={styles.inputFocus}
             placeholder="9"
             onChangeText={setNumberOne}
             value={numberOne}
           />
           <LineEmpty />
           <Input
-            style={{ flex: 1, textAlign: 'center' }}
-            _focus={{ borderWidth: 2 }}
+            style={styles.input}
+            _focus={styles.inputFocus}
             placeholder="9"
             onChangeText={setNumberTwo}
             value={numberTwo}
           />
         </View>
-        <View
-          style={{
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: 10,
-          }}
-        >
+        <View style={styles.boxInput}>
           <Input
-            style={{ flex: 1, textAlign: 'center' }}
-            _focus={{ borderWidth: 2 }}
+            style={styles.input}
+            _focus={styles.inputFocus}
             placeholder="9"
             onChangeText={setNumberThree}
             value={numberThree}
-            onSubmitEditing={handleCalculate}
+            onSubmitEditing={handleCalculateRuleOfThree}
           />
           <LineEmpty />
           <Input
-            style={{ flex: 1, textAlign: 'center' }}
-            _focus={{ borderWidth: 2 }}
+            style={styles.input}
+            _focus={styles.inputFocus}
             placeholder="X"
             editable={false}
             selectTextOnFocus={false}
           />
         </View>
       </View>
-      <Button text="Calcular" onPress={handleCalculate} />
-      <Modal visible={isModalOpen} transparent>
-        <Result
-          text={`O resultado é igual a  ${
-            (Number(numberTwo) * Number(numberThree)) / Number(numberOne)
-          }`}
-          handleClose={() => setIsModalOpen(false)}
-        />
-      </Modal>
+      <Button text="Calcular" onPress={handleCalculateRuleOfThree} />
+      <ModalRuleOfThreeShowResult
+        isModalOpen={isModalOpen}
+        text={`O resultado é igual a  ${resultRuleOfThree}`}
+        handleClose={() => setIsModalOpen(false)}
+      />
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 10,
+    backgroundColor: colors.background,
+    paddingVertical: 20,
+  },
+  inputFocus: {
+    borderWidth: 2,
+  },
+  input: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  boxInput: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 10,
+  },
+  heading: {
+    fontFamily: fonts.Lexend[700],
+    fontSize: fontSize[24],
+    textAlign: 'center',
+  },
+  main: { flex: 1, paddingTop: 30, gap: 30 },
+});

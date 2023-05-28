@@ -4,31 +4,38 @@ import {
   View,
   TouchableOpacityProps,
   Text,
+  StyleSheet,
 } from 'react-native';
 
 import { Theme } from '../styles/Theme';
 type Props = TouchableOpacityProps & {
   text: string;
+  type?: 'PRIMARY' | 'SECONDARY';
 };
-export const Button: FC<Props> = ({ text, ...props }) => {
-  const { size, colors, fontSize, fonts } = Theme;
+const { size, colors, fontSize, fonts } = Theme;
+export const Button: FC<Props> = ({
+  type = 'PRIMARY',
+  style,
+  text,
+  ...props
+}) => {
   return (
     <TouchableOpacity {...props}>
       <View
-        style={{
-          width: '100%',
-          height: size[52],
-          backgroundColor: colors.button,
-          borderRadius: 8,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={[
+          styles.button,
+          {
+            backgroundColor:
+              type === 'SECONDARY' ? 'transparent' : colors.button,
+          },
+          style,
+        ]}
       >
         <Text
           style={{
             fontFamily: fonts.Lexend[600],
-            fontSize: fontSize[20],
-            color: colors.white,
+            fontSize: type === 'SECONDARY' ? fontSize[14] : fontSize[18],
+            color: type === 'SECONDARY' ? colors.black : colors.white,
           }}
         >
           {text}
@@ -37,3 +44,12 @@ export const Button: FC<Props> = ({ text, ...props }) => {
     </TouchableOpacity>
   );
 };
+const styles = StyleSheet.create({
+  button: {
+    width: '100%',
+    height: size[52],
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
