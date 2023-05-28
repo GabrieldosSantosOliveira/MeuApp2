@@ -44,6 +44,7 @@ export const Home: FC = () => {
             placeholder="9"
             onChangeText={setNumberOne}
             value={numberOne}
+            keyboardType='number-pad'
           />
           <LineEmpty />
           <Input
@@ -52,6 +53,7 @@ export const Home: FC = () => {
             placeholder="9"
             onChangeText={setNumberTwo}
             value={numberTwo}
+            keyboardType='number-pad'
           />
         </View>
         <View style={styles.boxInput}>
@@ -62,6 +64,7 @@ export const Home: FC = () => {
             onChangeText={setNumberThree}
             value={numberThree}
             onSubmitEditing={handleCalculateRuleOfThree}
+            keyboardType='number-pad'
           />
           <LineEmpty />
           <Input
