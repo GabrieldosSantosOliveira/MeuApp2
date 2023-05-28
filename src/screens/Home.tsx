@@ -12,7 +12,7 @@ export const Home: FC = () => {
   const [numberOne, setNumberOne] = useState<string>('');
   const [numberTwo, setNumberTwo] = useState<string>('');
   const [numberThree, setNumberThree] = useState<string>('');
-  const [resultRuleOfThree, setResultRuleOfThree] = useState<number>();
+  const [resultRuleOfThree, setResultRuleOfThree] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const serviceRuleOfThree = new ServiceRuleOfThree();
   const handleCalculateRuleOfThree = () => {
@@ -79,7 +79,7 @@ export const Home: FC = () => {
       <Button text="Calcular" onPress={handleCalculateRuleOfThree} />
       <ModalRuleOfThreeShowResult
         isModalOpen={isModalOpen}
-        text={`O resultado é igual a  ${resultRuleOfThree}`}
+        text={`O resultado é igual a  ${resultRuleOfThree?.toFixed(2)}`}
         handleClose={() => setIsModalOpen(false)}
       />
     </View>
