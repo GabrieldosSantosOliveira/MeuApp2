@@ -3,10 +3,10 @@ import { Alert, Text, View, StyleSheet } from 'react-native';
 
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
-import { ModalRuleOfThreeShowResult } from '../components/ModalRuleOfThreeShowResult';
-import { Theme } from '../styles/Theme';
 import { LineEmpty } from '../components/LineEmpty';
+import { ModalRuleOfThreeShowResult } from '../components/ModalRuleOfThreeShowResult';
 import { ServiceRuleOfThree } from '../services/ServiceRuleOfThree';
+import { Theme } from '../styles/Theme';
 const { colors, fontSize, fonts } = Theme;
 export const Home: FC = () => {
   const [numberOne, setNumberOne] = useState<string>('');

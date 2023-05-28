@@ -1,4 +1,5 @@
 import { View } from 'react-native';
+
 import { Theme } from '../styles/Theme';
 const { colors } = Theme;
 export const LineEmpty = () => (
